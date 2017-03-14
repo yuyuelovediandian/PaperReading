@@ -1,0 +1,46 @@
+首先需要注意的是，这套算法中直到AS的构建都是与ASPIC+一致的。然后从AS到AT的构建开始改变。 AS = (L, -, R, n)
+L = {B, M, D, T, A, O, HC, GC, FC, WR}
+RS = {T->B; HC, GC->T}
+RD = {WR=>M}
+Kn = {HC, WR}
+Kp = {GC}
+B = {M,D}  M = {B,D}  D = {B,M}  T = {A,O}  A = {T,O}  O = {T,A}  GC = {FC}
+1. 从论证中的硬规则得到所有的S |- min  。
+S |- min 的定义如下：S |-  且  T : T |- 
+S |-  的定义如下：存在一个严格论证a, Conc(a) =,并且Prem(a)  S.
+举例如下：RS = {T->B; HC,GC->T} 则我们可以得到
+{T} |- min B,   {HC, GC} |- min T,   {HC, GC} |- min B
+2. 从AS中构建扩展矛盾关系(extended contrariness relation) 
+应用到以上例子：
+ 为空集；
+3. 遍历构建论辩树。（注意这里不需要构建逆否论证）
+应用到以上例子：
+a1 = HC, 
+a2 = GC, 
+a3 = WR, 
+a4 = [a1, a2->T], 
+a5 = [a4->B], 
+a6 = [a3=>M].
+4. 对每个论证集合寻找攻击的论证。（使用新型的攻击关系定义）
+这里需要注意的是，为了避免计算的复杂度和规范要求，我们需要首先找出
+fallible argument = {a2, a4, a5, a6}, 和firm argument = {a1, a3}，然后对其中的攻击关系进行寻找。可以得到
+{a4}, {a5}   rebut   a6
+{a1, a2}    rebut   a6
+{a1, a6}    rebut   a2
+{a1, a6}    rebut   a4
+{a1, a6}    rebut   a5
+
+
+5. 找出有效的攻击（即是击败） 这里涉及的是优先顺序的定义与实现。
+一个论证的集合击败某个论证，即 ，记作， 当且仅当
+ ① preference-independent attacks b on b’
+② preference-dependent attacks b on b’ and 
+可以得出，
+{a4}  a6, {a5}  a6, {a1, a2}  a6, {a1, a6}  a2, {a1, a6}  a4, {a1, a6}  a5
+可以得到 RS(AT) = {{a1},{a2},{a3},{a4},{a5},{a6},{a1, a2},{a1, a6}}
+6. 除此之外，还需要找论证集合之间的攻击关系 D-attack。
+D-attack 记作  当且仅当 .
+因此，我们还可以得到 {a1, a2} D-attack {a1, a6}   {a1,a6} D-attack {a1, a2}
+                     {a4} D-attack {a1, a6}      {a5} D-attack {a1, a6}
+
+7. 这样我们就把论证树及其中的攻击关系刻画出来了。
