@@ -2,4 +2,6 @@ how to grow a mind: stastics,structure,abstraction   source URL:http://www.psy.c
   main questions:1. how does abstract knowledge guide learning and inference from sparse data?
                  2. what forms does abstract knowledge take, across different domain and tasks?
                  3. how is abstract knowledge itself acquired?
+  two archetypal inductive problems:1. learning concepts 
+                                    2. learning casual relations
   
